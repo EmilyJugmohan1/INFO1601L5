@@ -56,12 +56,35 @@ function getAverateGrade(student, course) {
       return sum / trans.grade.length;
     }
   }
+  return -1;
 }
 
 function getAssignmentMark(student, course, num) {
-  
+  if (student.course && student.course[course]) {
+    const assignment = student.course[course].assignment;
+
+    if (assignment && assignment[num] !== undefined) {
+      return assignment[num].grade;
+    }
+  }
+
+  return -1;
 }
 
 function averageAssessment(students, courseName, assignment) {
+  let totalMarks = 0;
+  let count = 0;
 
+  for (const student of students) {
+    if (student.course && student.course[courseName]) {
+      const assignment = student.course[courseName].assignment;
+
+      if (assignment && assignments[assignment] !== undefined) {
+        totalMarks += assignments[assignment].grade;
+        count++;
+      }
+    }
+  }
+
+  return count > 0 ? totalMarks / count : 0;
 }
